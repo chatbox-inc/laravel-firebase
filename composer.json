@@ -1,0 +1,17 @@
+{
+    "name": "chatbox-inc/laravel-firebase",
+    "authors": [
+        {
+            "name": "mikakane",
+            "email": "t.goto@chatbox-inc.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Chatbox\\Larabase\\": "./src/"
+        }
+    },
+    "require": {
+        "kreait/firebase-php": "^4.19"
+    }
+}
