@@ -13,5 +13,12 @@
     },
     "require": {
         "kreait/firebase-php": "^4.19"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "\\Chatbox\\Larabase\\FirebaseServiceProvider"
+            ]
+        }
     }
 }
