@@ -1,8 +1,8 @@
 <?php
 namespace Chatbox\Larabase;
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\ServiceProvider;
+
 use Kreait\Firebase;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\ServiceAccount;
@@ -34,23 +34,10 @@ class FirebaseServiceProvider extends ServiceProvider
 
         app()->alias(Firebase::class,"firebase");
 
-        app('auth')->viaRequest('firebase_idtoken', function (Request $request) {
-            /** @var Firebase $firebase */
-            $firebase = app(Firebase::class);
-            if ($token = $request->bearerToken()) {
-                try {
-                    $verifiedIdToken = $firebase->getAuth()->verifyIdToken($token);
-                    $uid = $verifiedIdToken->getClaim('sub');
-                    return $firebase->getAuth()->getUser($uid);
-                } catch (\Firebase\Auth\Token\Exception\InvalidToken $e) {
-                    throw new AuthenticationException();
-                }
-
-                return $this->user->findByToken($token);
-            }
+        app('auth')->viaRequest('firebase_idtoken', function ($request) {
+            /** @var FirebaseAuth $auth */
+            $auth = app(FirebaseAuth::class);
+            return $auth->user($request);
         });
-
-
     }
-
 }
