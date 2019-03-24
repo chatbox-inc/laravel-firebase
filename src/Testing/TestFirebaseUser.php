@@ -1,8 +1,9 @@
 <?php
 namespace Chatbox\Larabase\Testing;
+use Chatbox\Larabase\FirebaseUser;
 use Illuminate\Foundation\Testing\WithFaker;
-use Kreait\Firebase\Auth\UserRecord as BaseUserRecord;
 use Chatbox\Larabase\FirebaseAuth;
+use Kreait\Firebase\Auth\UserRecord;
 
 /**
  * Created by PhpStorm.
@@ -11,11 +12,11 @@ use Chatbox\Larabase\FirebaseAuth;
  * Time: 20:17
  */
 
-class UserRecord extends BaseUserRecord
+class TestFirebaseUser extends FirebaseUser
 {
     use WithFaker;
 
-    static public function fake():UserRecord{
+    static public function fake():TestFirebaseUser{
         return (new static())->makeFackObject();
     }
 
@@ -29,7 +30,7 @@ class UserRecord extends BaseUserRecord
     }
 
     public function makeFackObject(){
-        $this->uid = 1234556;
+        $this->uid = mt_rand(100000,999999);
         $this->email = $this->faker->email;
         $this->displayName = $this->faker->name;
         $this->photoUrl = "https://placehold.it/800x800";

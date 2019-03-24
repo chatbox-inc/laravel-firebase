@@ -17,8 +17,7 @@ use Kreait\Firebase\Auth\UserRecord;
 
 class FirebaseUser extends UserRecord implements
     AuthenticatableContract,
-    AuthorizableContract,
-    CanResetPasswordContract
+    AuthorizableContract
 {
     use Authenticatable, Authorizable;
 
@@ -26,20 +25,22 @@ class FirebaseUser extends UserRecord implements
     /**
      * FirebaseUser constructor.
      */
-    public function __construct(UserRecord $userRecord)
+    public function __construct(UserRecord $userRecord=null)
     {
-        $this->uid = $userRecord->uid;
-        $this->emai = $userRecord->email;
-        $this->emailVerified = $userRecord->emailVerified;
-        $this->displayName = $userRecord->displayName;
-        $this->photoUrl = $userRecord->photoUrl;
-        $this->phoneNumber = $userRecord->phoneNumber;
-        $this->disabled = $userRecord->disabled;
-        $this->metadata = $userRecord->metadata;
-        $this->providerData = $userRecord->providerData;
-        $this->passwordHash = $userRecord->passwordHash;
-        $this->customAttributes = $userRecord->customAttributes;
-        $this->tokensValidAfterTime = $userRecord->tokensValidAfterTime;
+        if($userRecord){
+            $this->uid = $userRecord->uid;
+            $this->emai = $userRecord->email;
+            $this->emailVerified = $userRecord->emailVerified;
+            $this->displayName = $userRecord->displayName;
+            $this->photoUrl = $userRecord->photoUrl;
+            $this->phoneNumber = $userRecord->phoneNumber;
+            $this->disabled = $userRecord->disabled;
+            $this->metadata = $userRecord->metadata;
+            $this->providerData = $userRecord->providerData;
+            $this->passwordHash = $userRecord->passwordHash;
+            $this->customAttributes = $userRecord->customAttributes;
+            $this->tokensValidAfterTime = $userRecord->tokensValidAfterTime;
+        }
     }
 
     public function getKeyName(){
