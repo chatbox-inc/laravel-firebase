@@ -24,6 +24,8 @@ class FirebaseServiceProvider extends ServiceProvider
 
     public function register()
     {
+        app()->singleton(FirebaseAuth::class);
+
         app()->singleton(Firebase::class,function(){
             $serviceAccount = ServiceAccount::fromArray(config("services.firebase",[]));
             $firebase = (new Factory())
@@ -37,7 +39,7 @@ class FirebaseServiceProvider extends ServiceProvider
         app('auth')->viaRequest('firebase_idtoken', function ($request) {
             /** @var FirebaseAuth $auth */
             $auth = app(FirebaseAuth::class);
-            return $auth->user($request);
+            return $auth->auth($request);
         });
     }
 }

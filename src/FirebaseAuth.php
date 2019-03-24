@@ -18,18 +18,7 @@ use Kreait\Firebase\Auth\UserRecord;
 
 class FirebaseAuth
 {
-    public $fb;
-
     public $users = [];
-
-    /**
-     * FirebaseAuth constructor.
-     * @param $fb
-     */
-    public function __construct(Firebase $fb)
-    {
-        $this->fb = $fb;
-    }
 
     public function setUser($token,UserRecord $user){
         return Arr::set($this->users, $token,$user);
@@ -40,7 +29,6 @@ class FirebaseAuth
     }
 
     public function auth(Request $request):?UserRecord{
-        $firebase = $this->fb;
         $token = $request->bearerToken();
         if (!$token) {
             throw new AuthenticationException();
@@ -50,6 +38,8 @@ class FirebaseAuth
             return $user;
         }
         try {
+            /** @var Firebase $firebase */
+            $firebase = app(Firebase::class);
             $verifiedIdToken = $firebase->getAuth()->verifyIdToken($token);
             $uid = $verifiedIdToken->getClaim('sub');
             return $firebase->getAuth()->getUser($uid);
