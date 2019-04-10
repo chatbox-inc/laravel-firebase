@@ -4,6 +4,7 @@ use Chatbox\Larabase\FirebaseUser;
 use Illuminate\Foundation\Testing\WithFaker;
 use Chatbox\Larabase\FirebaseAuth;
 use Kreait\Firebase\Auth\UserRecord;
+use Closure;
 
 /**
  * Created by PhpStorm.
@@ -16,8 +17,22 @@ class TestFirebaseUser extends FirebaseUser
 {
     use WithFaker;
 
+    static protected $users = [];
+
     static public function fake():TestFirebaseUser{
         return (new static())->makeFackObject();
+    }
+
+    static public function users(){
+        return static::$users;
+    }
+    
+    static public function remenber(Closure $caller){
+        foreach (static::$users as $token => $user) {
+            assert($user instanceof TestFirebaseUser);
+            $user->recordAs($token);
+            $caller($token,$user);
+        }
     }
 
     /**
@@ -42,6 +57,7 @@ class TestFirebaseUser extends FirebaseUser
             $auth->setUser($token,$this);
             return $auth;
         });
+        static::$users[$token] = $this;
         return $this;
     }
 }
