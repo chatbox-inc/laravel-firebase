@@ -26,6 +26,10 @@ class FirebaseServiceProvider extends ServiceProvider
     {
         app()->singleton(FirebaseAuth::class);
 
+
+        /** @var  $hoge */
+        $hoge=hoge;
+
         app()->singleton(Firebase::class,function(){
             $serviceAccount = ServiceAccount::fromArray(config("services.firebase",[]));
             $firebase = (new Factory())

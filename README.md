@@ -1,16 +1,22 @@
 ## Larabase - firebase with Laravel
 
-https://firebase-php.readthedocs.io/en/stable/setup.html
 
 ## functions and scopes
 
-- [x] Inject Configured Firebase Object to container.
-- [x] Laravel Auth with Firebase uid.
-- [x] Laravel Auth Mock for unit test.
+構造 firebase-php をベースにLaravel 向けの Wrapper を付与しています。
+
+https://firebase-php.readthedocs.io/en/stable/setup.html
+
+kreait/laravel-firebase が json file ベースの認証をサポートしているのに対し、
+こちらのライブラリでは、環境変数値での認証をサポートしています。
+
+- [x] Firebase オブジェクトをコンテナに注入.
+- [x] Firebase uid ベースの認証ドライバの実装.
+- [x] unit test のための Auth Mock.
 
 ## Injected Firebase Object
 
-`laravel-firebase` use `kreait/firebase-php`
+`laravel-firebase` では、 `kreait/firebase-php` を利用しています。
 
 https://github.com/kreait/firebase-php
 
@@ -37,9 +43,21 @@ return [
 ];
 ```
 
+`.env` は以下のような構成になります。
+
+```
+FIREBASE_PROJECTID=
+FIREBASE_PRIVATEID=
+FIREBASE_PRIVATEKEY=
+FIREBASE_CLIENTEMAIL=
+FIREBASE_CLIENTID=
+FIREBASE_X509CERTURL=
+```
+
 containered object also has alias name `firebase`. so you can recieve firebase object also like this.
 
 ```php
+/** @var \Kreait\Firebase $firebase */
 $firebase = app("firebase");
 ```  
 
