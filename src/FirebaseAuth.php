@@ -38,10 +38,11 @@ class FirebaseAuth
         try {
             /** @var Factory $firebase */
             $firebase = app("firebase");
-            $verifiedIdToken = $firebase->createAuth()->verifyIdToken($token);
+            $firebaseAuth = $firebase->createAuth();
+            $verifiedIdToken = $firebaseAuth->verifyIdToken($token);
             $uid = $verifiedIdToken->getClaim('sub');
             return new FirebaseUser(
-                $firebase->getAuth()->getUser($uid)
+                $firebaseAuth->getUser($uid)
             );
         } catch (\Firebase\Auth\Token\Exception\InvalidToken $e) {
             throw new AuthenticationException();
