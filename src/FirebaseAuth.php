@@ -11,8 +11,7 @@ namespace Chatbox\Larabase;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Kreait\Firebase;
-
+use Kreait\Firebase\Factory;
 use Illuminate\Auth\AuthenticationException;
 
 class FirebaseAuth
@@ -37,9 +36,9 @@ class FirebaseAuth
             return $user;
         }
         try {
-            /** @var Firebase $firebase */
-            $firebase = app(Firebase::class);
-            $verifiedIdToken = $firebase->getAuth()->verifyIdToken($token);
+            /** @var Factory $firebase */
+            $firebase = app("firebase");
+            $verifiedIdToken = $firebase->createAuth()->verifyIdToken($token);
             $uid = $verifiedIdToken->getClaim('sub');
             return new FirebaseUser(
                 $firebase->getAuth()->getUser($uid)

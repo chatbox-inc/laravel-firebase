@@ -26,15 +26,14 @@ class FirebaseServiceProvider extends ServiceProvider
     {
         app()->singleton(FirebaseAuth::class);
 
-        app()->singleton(Firebase::class,function(){
+        app()->singleton(Factory::class,function(){
             $serviceAccount = ServiceAccount::fromArray(config("services.firebase",[]));
             $firebase = (new Factory())
-                ->withServiceAccount($serviceAccount)
-                ->create();
+                ->withServiceAccount($serviceAccount);
             return $firebase;
         });
 
-        app()->alias(Firebase::class,"firebase");
+        app()->alias(Factory::class,"firebase");
 
         app('auth')->viaRequest('firebase_idtoken', function ($request) {
             /** @var FirebaseAuth $auth */
