@@ -29,7 +29,7 @@ class FirebaseUser extends UserRecord implements
     {
         if($userRecord){
             $this->uid = $userRecord->uid;
-            $this->emai = $userRecord->email;
+            $this->email = $userRecord->email;
             $this->emailVerified = $userRecord->emailVerified;
             $this->displayName = $userRecord->displayName;
             $this->photoUrl = $userRecord->photoUrl;
